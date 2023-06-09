@@ -1,0 +1,40 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body {
+    background-color: black;
+    color: #fff;
+}
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100vw;
+    height: 100vh;
+    gap: 1rem;
+}
+input {
+    display: flex;
+    height: 2rem;
+    width: 10rem;
+}
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+}
+select {
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   height: 2rem;
+   width: 10rem;
+}
+button {
+    width: 10rem;
+    height: 2rem;
+}
