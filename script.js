@@ -1,58 +1,97 @@
-   document.getElementById('calculator').addEventListener('submit', function(e) {
-    e.preventDefault(); // dude that prevent default made me cry
+   const data = [
+    {
+      phase: "Maintenance",
+      protein: 2.6,
+      carb: 2.6,
+      fat: 1
+    },
+    {
+      phase: "Week 1 & 2",
+      protein: 2.6,
+      carb: 2.4,
+      fat: 0.9
+    },
+    {
+      phase: "Week 3 & 4",
+      protein: 2.6,
+      carb: 2.2,
+      fat: 0.8
+    },
+    {
+      phase: "Week 5 & 6",
+      protein: 2.6,
+      carb: 2.0,
+      fat: 0.7
+    },
+    {
+      phase: "Week 7 & 8",
+      protein: 2.6,
+      carb: 1.8,
+      fat: 0.6
+    },
+    {
+      phase: "Week 9 & 10",
+      protein: 2.6,
+      carb: 1.8,
+      fat: 0.6
+    },
+    {
+      phase: "Week 11",
+      protein: 2.6,
+      carb: 1.6,
+      fat: 0.4
+    },
+    {
+      phase: "Week 12",
+      protein: 2.6,
+      carb: 1.4,
+      fat: 0.3
+    }
+   ]
 
-  var weightInput = document.getElementById('weight');
-  var weight = parseFloat(weightInput.value);
-  var week = document.getElementById('week').value;
-    // this part took me 3h to make :(
-// its tooks me 5 videos with indian guys in it, to get it done, and i still dont know if this is going to work. never used this case, switch and break before 
-   var protein,carbs, fat;
-   
-if (week === 'maintenace') {
-  protein = 2.6 * weight;
-  carbs = 2.6 * weight;
-  fat = weight;
-} else if (week === 'week1') {
-  protein = 2.6 * weight;
-  carbs = 2.4 * weight;
-  fat = 0.8 * weight;
-} else if (week === 'week3') {
-  protein = 2.6 * weight;
-  carbs = 2.2 * weight;
-  fat = 0.7 * weight;
-} else if (week === 'week5') {
-  protein = 2.6 * weight;
-  carbs = 2.0 * weight;
-  fat = 0.6 * weight;
-} else if (week === 'week7') {
-  protein = 2.6 * weight;
-  carbs = 1.8 * weight;
-  fat = 0.6 * weight;
-} else if (week === 'week9') {
-  protein = 2.6 * weight;
-  carbs = 1.6 * weight;
-  fat = 0.4 * weight;
-} else if (week === 'week11') {
-  protein = 2.6 * weight;
-  carbs = 1.6 * weight;
-  fat = 0.4 * weight;
-} else if (week === 'week12') {
-  protein = 2.6 * weight;
-  carbs = 1.4 * weight;
-  fat = 0.3 * weight;
+const phaseInput = document.getElementById("phase")
+phaseInput.innerHTML = getPhaseElements()
+
+function getPhaseElements() {
+  let elements = ""
+  data.forEach((index) => {
+    elements += `<option value="${index.phase}">${index.phase}</option>`
+  })
+  return elements
 }
-  //  Thats is going to be my final calculation
-   var proteinCal = protein * 4 ;
-   var carbsCal = carbs * 4 ;
-   var fatCal = fat * 9;
-   var totalCal = proteinCal + carbsCal + fatCal;
 
-   var resultContainer = document.getElementById('results');
-   var caloriesContainer = document.getElementById('calories');
-   var pcfContainer = document.getElementById('pcf');
+document.getElementById('calculator').addEventListener('submit', function(e) {
+    e.preventDefault();
 
+  let weightInput = document.getElementById('weight');
+  let weight = parseFloat(weightInput.value);
+  let phase = document.getElementById('phase').value;
+
+   const macros = {
+    protein: 0,
+    carbs: 0,
+    fat: 0
+  }
+
+  calculateMacros(macros, phase, weight)
+  const totalCal = calculateCalories(macros)
+  const { protein, carbs, fat } = macros
+  
+   const resultContainer = document.getElementById('results');
+   const caloriesContainer = document.getElementById('calories');
+   const pcfContainer = document.getElementById('pcf');
    caloriesContainer.innerHTML = 'Total Calories: '+totalCal.toFixed(2)+'calories';
-   pcfContainer.innerHTML = 'Protein:' + protein.toFixed(2) + 'g, Carbs:' + carbs.toFixed(2) +'g, Fat:'+ fat.toFixed(2)+'g'; // chat gpt helpt me on that one
-
+   pcfContainer.innerHTML = 'Protein:' + protein.toFixed(2) + 'g<br>Carbs:' + carbs.toFixed(2) +'g<br>Fat:'+ fat.toFixed(2)+'g';
    resultContainer.classList.remove('hidden');
   });
+
+function calculateMacros(macros, phase, weight) {
+  const foundPhase = data.find(object => object.phase === phase)
+  macros.protein = foundPhase.protein * weight
+  macros.carbs = foundPhase.carb * weight
+  macros.fat = foundPhase.fat * weight
+}
+
+function calculateCalories(macros) {
+  return (macros.protein * 4) + (macros.carbs * 4) + (macros.fat * 9)
+}
