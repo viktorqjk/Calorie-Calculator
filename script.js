@@ -52,6 +52,7 @@
 const phaseInput = document.getElementById("phase")
 phaseInput.innerHTML = getPhaseElements()
 
+
 function getPhaseElements() {
   let elements = ""
   data.forEach((index) => {
@@ -61,29 +62,31 @@ function getPhaseElements() {
 }
 
 document.getElementById('calculator').addEventListener('submit', function(e) {
-    e.preventDefault();
-
+  e.preventDefault();
+  
   let weightInput = document.getElementById('weight');
   let weight = parseFloat(weightInput.value);
   let phase = document.getElementById('phase').value;
-
-   const macros = {
+  let weightUnit = document.getElementById('select').value;
+  let weightKg = weightUnit === 'kg' ? weight : weight * 0.4;
+  
+  const macros = {
     protein: 0,
     carbs: 0,
     fat: 0
   }
-
+  
   calculateMacros(macros, phase, weight)
   const totalCal = calculateCalories(macros)
   const { protein, carbs, fat } = macros
   
-   const resultContainer = document.getElementById('results');
-   const caloriesContainer = document.getElementById('calories');
-   const pcfContainer = document.getElementById('pcf');
-   caloriesContainer.innerHTML = 'Total Calories: '+totalCal.toFixed(2)+'calories';
-   pcfContainer.innerHTML = 'Protein:' + protein.toFixed(2) + 'g<br>Carbs:' + carbs.toFixed(2) +'g<br>Fat:'+ fat.toFixed(2)+'g';
-   resultContainer.classList.remove('hidden');
-  });
+  const resultContainer = document.getElementById('results');
+  const caloriesContainer = document.getElementById('calories');
+  const pcfContainer = document.getElementById('pcf');
+  caloriesContainer.innerHTML = 'Total Calories: '+totalCal.toFixed(2)+'calories';
+  pcfContainer.innerHTML = 'Protein:' + protein.toFixed(2) + 'g<br>Carbs:' + carbs.toFixed(2) +'g<br>Fat:'+ fat.toFixed(2)+'g';
+  resultContainer.classList.remove('hidden');
+});
 
 function calculateMacros(macros, phase, weight) {
   const foundPhase = data.find(object => object.phase === phase)
