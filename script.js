@@ -69,14 +69,14 @@ document.getElementById('calculator').addEventListener('submit', function(e) {
   let phase = document.getElementById('phase').value;
   let weightUnit = document.getElementById('select').value;
   let weightKg = weightUnit === 'kg' ? weight : weight * 0.4;
-  
+    
   const macros = {
     protein: 0,
     carbs: 0,
     fat: 0
   }
   
-  calculateMacros(macros, phase, weight)
+  calculateMacros(macros, phase, weightKg)
   const totalCal = calculateCalories(macros)
   const { protein, carbs, fat } = macros
   
