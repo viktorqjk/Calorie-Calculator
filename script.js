@@ -68,7 +68,7 @@ document.getElementById('calculator').addEventListener('submit', function(e) {
   let weight = parseFloat(weightInput.value);
   let phase = document.getElementById('phase').value;
   let weightUnit = document.getElementById('select').value;
-  let weightKg = weightUnit === 'kg' ? weight : weight * 0.4;
+  let weightKg = weightUnit === 'kg' ? weight : weight * 0.453592;
     
   const macros = {
     protein: 0,
